@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?><!--Agrego mi fragment statico -->
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/list_fragmet"
+    android:name="com.monsh.codigofacilitoapp.Fragments.ListaFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.monsh.codigofacilitoapp.Fragments.ListaFragment"
+    tools:layout="@android:layout/list_content" />

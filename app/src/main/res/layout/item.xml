@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--Texto de la Base de Datos para el item de la lista -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="HolaMundo"
+        android:id="@+id/titulo"
+        android:textSize="30sp"
+        android:padding="10dp"
+        android:textColor="@color/black"/>
+
+    <!--TextView invisible para traerlo de la base de datos -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:visibility="gone"
+        android:padding="10dp"
+        android:id="@+id/listanombre"/>
+    
+    <!--Divider del ListView -->
+    <View
+        style="@style/divider"/>
+
+
+</LinearLayout>
