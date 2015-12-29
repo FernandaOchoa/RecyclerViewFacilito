@@ -28,7 +28,7 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
 
     public ListaAdapter(Context context, Cursor cursor) {
         myContext = context;
-        myCursorAdapter = new CursorAdapter(myContext, cursor, 0) {
+        myCursorAdapter = new CursorAdapter(myContext,cursor,0) {
 
             //
             @Override
@@ -47,7 +47,7 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
                 TextView listanombre = (TextView) view.findViewById(R.id.listanombre);
 
                 textView.setText(cursor.getString(cursor.getColumnIndex(cursor.getColumnName(1))));
-                textView.setText(cursor.getString(cursor.getColumnIndex(cursor.getColumnName(2))));
+                listanombre.setText(cursor.getString(cursor.getColumnIndex(cursor.getColumnName(2))));
             }
         };
     }
@@ -57,8 +57,8 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
     //Iniciamos la vista con los elementos que tenemos
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()
-        ).inflate(R.layout.item, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item, parent, false);
 
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
@@ -70,7 +70,7 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
         //holder.textView.setText(myData[position]);
 
         myCursorAdapter.getCursor().moveToPosition(position);
-        myCursorAdapter.bindView(holder.itemView, myContext, myCursorAdapter.getCursor());
+        myCursorAdapter.bindView(holder.itemView,myContext,myCursorAdapter.getCursor());
 
     }
 

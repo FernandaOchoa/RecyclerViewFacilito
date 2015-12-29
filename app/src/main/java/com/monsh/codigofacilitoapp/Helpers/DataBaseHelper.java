@@ -24,7 +24,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
     public DataBaseHelper(Context context) {
-        super(context, DB_NAME, null, 1);
+        super(context,DB_NAME,null,1);
         this.myContext = context;
 
     }
@@ -35,7 +35,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         //vamos al CheckDB y revisamos si existe
         boolean dbExist = checkDataBase();
-        SQLiteDatabase db_Read=null;
+        SQLiteDatabase db_Read = null;
 
         //Si existe no quiero hacer nada
         if (dbExist){
@@ -82,7 +82,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         InputStream myInput = myContext.getAssets().open(DB_NAME);
         String outFileName = DB_PATH+DB_NAME;
-
         OutputStream myOutput = new FileOutputStream(outFileName);
 
         //Para leer los archivos usamos un tipo byte por que nos permite tener un buffer
