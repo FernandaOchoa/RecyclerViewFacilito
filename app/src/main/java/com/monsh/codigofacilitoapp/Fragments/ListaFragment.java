@@ -9,10 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.monsh.codigofacilitoapp.Adapters.ListaAdapter;
 import com.monsh.codigofacilitoapp.Helpers.DataBaseHelper;
 import com.monsh.codigofacilitoapp.R;
+import com.monsh.codigofacilitoapp.RecyclerItemClickListener;
 
 import java.io.IOException;
 
@@ -30,8 +33,8 @@ public class ListaFragment extends Fragment {
     DataBaseHelper myDBHelper;
 
     //Creamos una interface
-    public interface CallBacks{
-        public void onItemSelected(String nombrelista,String lista);
+    public interface CallBacks {
+        public void onItemSelected(String nombrelista, String lista);
     }
 
 
@@ -69,11 +72,35 @@ public class ListaFragment extends Fragment {
             if (cursor != null) {
                 adapter = new ListaAdapter(getActivity().getApplicationContext(), cursor);
                 recyclerView.setAdapter(adapter);
+                recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity().getApplicationContext(), new OnItemClickListener()));
             }
         } catch (SQLException e) {
 
         }
 
         return rootView;
+    }
+
+    //Creamos
+
+    private class OnItemClickListener extends RecyclerItemClickListener.SimpleOnItemClickListener {
+        @Override
+        public void onItemClick(View childView, int position) {
+            TextView textView = (TextView) childView.findViewById(R.id.titulo);
+            TextView listanombre = (TextView) childView.findViewById(R.id.listanombre);
+
+            //Para mandar llamar el fragment
+            //((CallBacks)getActivity()).onItemSelected(textView.getText().toString(),listanombre.getText().toString());
+
+            Toast.makeText(getActivity(),textView.getText().toString(),Toast.LENGTH_SHORT).show();
+
+            //super.onItemClick(childView, position);
+
+        }
+
+        @Override
+        public void onItemLongPress(View childView, int position) {
+            super.onItemLongPress(childView, position);
+        }
     }
 }
