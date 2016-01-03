@@ -3,7 +3,6 @@ package com.monsh.codigofacilitoapp.Fragments;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +29,11 @@ public class ListaFragment extends Fragment {
     //1
     DataBaseHelper myDBHelper;
 
+    //Creamos una interface
+    public interface CallBacks{
+        public void onItemSelected(String nombrelista,String lista);
+    }
+
 
     //Creo mi arreglo de cadenas
     //  String[] Data = new String[]{"Elemento 1","Elemento 2","Elemento 3","Elemento 4", "Elemento 5,","Elemento 6","Elemento 7","Elemento 8","Elemento 9", "Elemento 10"};
@@ -44,6 +48,7 @@ public class ListaFragment extends Fragment {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.lista);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
+
         //Llenamos el RecyclerView 1 definimos el databasehelper
         //2 le decimos al dbhelper la ubicacion donde sera usado
         myDBHelper = new DataBaseHelper(getActivity().getApplicationContext());
@@ -56,9 +61,7 @@ public class ListaFragment extends Fragment {
         }
 
         // El cursor se llena a partir de lo que consultamos en la base de datos
-
         //Ahora al cursor le digo que sera llenado de la base de datos
-
         try {
             //Abrimos la bd *importante
             myDBHelper.openDataBase();
