@@ -1,8 +1,10 @@
 package com.monsh.codigofacilitoapp.Fragments;
 
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SimpleCursorAdapter;
@@ -36,6 +38,8 @@ public class ItemsFragment extends Fragment {
 
     String [] from;
     int [] to;
+
+    DataBaseHelper myDBHelper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -93,7 +97,15 @@ public class ItemsFragment extends Fragment {
                 builder.setPositiveButton("Agregar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        //Aqui insertamos a la BD
+                        DataBaseHelper myDbHelper = new DataBaseHelper(getActivity().getApplicationContext());
+                        SQLiteDatabase db = myDbHelper.getWritableDatabase();
+                        ContentValues values = new ContentValues();
+                        //al content values le agregamos lo que queremos insetar
+                        values.put("item",input.getText().toString());
 
+                        db.insert(lista,null,values);
+                        db.close();
                     }
                 });
                 //Boton Negativo
@@ -114,6 +126,8 @@ public class ItemsFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Toast.makeText(getActivity(),"Click 2",Toast.LENGTH_SHORT).show();
 
+                final TextView ID = (TextView) view.findViewById(R.id.id);
+
                 AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
                 adb.setTitle("Borrar");
                 adb.setMessage("¿Seguro deseas eliminar el item?");
@@ -123,7 +137,14 @@ public class ItemsFragment extends Fragment {
                 adb.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getActivity(),"Si si si", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(),"Si si si", Toast.LENGTH_SHORT).show();
+                        myDBHelper = new DataBaseHelper(getActivity().getApplicationContext());
+                        SQLiteDatabase db = myDBHelper.getWritableDatabase();
+
+                        //Otra forma de eliminar en base al id
+                        String where = "_id = '"+ID.getText().toString()+"'";
+                        db.delete(lista,where,null);
+                        db.close();
                     }
                 });
                 adb.show();
