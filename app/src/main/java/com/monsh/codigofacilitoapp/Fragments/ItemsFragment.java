@@ -1,14 +1,18 @@
 package com.monsh.codigofacilitoapp.Fragments;
 
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.support.v7.app.AlertDialog;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -79,14 +83,51 @@ public class ItemsFragment extends Fragment {
         additem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"Click 1",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(),"Click 1",Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Agregar un Item");
+                final EditText input = new EditText(getActivity());
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+                //Boton Positivo
+                builder.setPositiveButton("Agregar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                //Boton Negativo
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                builder.show();
             }
+
         });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity(),"Click 2",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(),"Click 2",Toast.LENGTH_SHORT).show();
+
+                AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
+                adb.setTitle("Borrar");
+                adb.setMessage("¿Seguro deseas eliminar el item?");
+                adb.setNegativeButton("Cancelar",null);
+                //El null es del listener no quiero que haga nada entonces no lo pongo, puedo poner un cancel aqui
+
+                adb.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getActivity(),"Si si si", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                adb.show();
+
             }
         });
 
