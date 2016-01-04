@@ -90,9 +90,10 @@ public class ListaFragment extends Fragment {
             TextView listanombre = (TextView) childView.findViewById(R.id.listanombre);
 
             //Para mandar llamar el fragment
-            //((CallBacks)getActivity()).onItemSelected(textView.getText().toString(),listanombre.getText().toString());
+            //
+            ((CallBacks) getActivity()).onItemSelected(textView.getText().toString(), listanombre.getText().toString());
 
-            Toast.makeText(getActivity(),textView.getText().toString(),Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(),listanombre.getText().toString(),Toast.LENGTH_SHORT).show();
 
             //super.onItemClick(childView, position);
 

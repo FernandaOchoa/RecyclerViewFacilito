@@ -24,7 +24,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
     public DataBaseHelper(Context context) {
-        super(context,DB_NAME,null,1);
+        super(context, DB_NAME, null, 1);
         this.myContext = context;
 
     }
@@ -38,9 +38,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db_Read = null;
 
         //Si existe no quiero hacer nada
-        if (dbExist){
+        if (dbExist) {
 
-        }else { //Si no existe entonces la copiamos
+        } else { //Si no existe entonces la copiamos
 
             //Obtenemos la bd a copiar en modo lectura
             db_Read = this.getReadableDatabase();
@@ -49,8 +49,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             try {
                 //Copiamos la Base de Datos
                 copyDataBase();
-            } catch (IOException e){
-                throw  new Error("Error copiando base de datos");
+            } catch (IOException e) {
+                throw new Error("Error copiando base de datos");
             }
         }
     }
@@ -73,15 +73,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         if (checkDB != null)
             //Si es diferente a nulo entonces cerramos la BD
             checkDB.close();
-            //Esa madre es un if mas pro
-            return checkDB != null ? true : false;
+        //Esa madre es un if mas pro
+        return checkDB != null ? true : false;
     }
 
-    private void copyDataBase() throws IOException{
+    private void copyDataBase() throws IOException {
         //Copiamos la bd igual que un archivo
 
         InputStream myInput = myContext.getAssets().open(DB_NAME);
-        String outFileName = DB_PATH+DB_NAME;
+        String outFileName = DB_PATH + DB_NAME;
         OutputStream myOutput = new FileOutputStream(outFileName);
 
         //Para leer los archivos usamos un tipo byte por que nos permite tener un buffer
@@ -93,9 +93,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         //Leemos el archivo de la BD y lo traemos a traves de lenght
         //-1 quiere decir que ya no hay nada osea el fin
         //Con el while hacemos la copia
-        while ((lenght = myInput.read(buffer)) != -1){
-            if (lenght>0){
-                myOutput.write(buffer,0,lenght);
+        while ((lenght = myInput.read(buffer)) != -1) {
+            if (lenght > 0) {
+                myOutput.write(buffer, 0, lenght);
             }
         }
         myOutput.flush();
@@ -103,12 +103,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         myInput.close();
     }
 
-    public void openDataBase()throws SQLException{
-        String myPath = DB_PATH+DB_NAME;
-        myDataBase = SQLiteDatabase.openDatabase(myPath,null,SQLiteDatabase.OPEN_READONLY);
+    public void openDataBase() throws SQLException {
+        String myPath = DB_PATH + DB_NAME;
+        myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
     }
-    public synchronized void close(){
-        if (myDataBase !=null)
+
+    public synchronized void close() {
+        if (myDataBase != null)
             myDataBase.close();
         super.close();
     }
@@ -122,20 +123,30 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //Codigo de la actualizacion
         //Para reescribir la app...
-        try{
+        try {
             createDataBase();
-        }catch (IOException e){
-          e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     //Este metodo nos da como resultado un cursor, cursor= resultado del query= consulta a la bd
-    public Cursor fetchAllList() throws SQLException{
+    public Cursor fetchAllList() throws SQLException {
 
         //RawQuery = Metodo que nos permite ejecutar un query
-        Cursor cursor = myDataBase.rawQuery("SELECT * FROM listas",null);
+        Cursor cursor = myDataBase.rawQuery("SELECT * FROM listas", null);
 
         //Si tiene algo el cursor que se mueva al primero
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        return cursor;
+    }
+
+    //Nuevo metodo
+
+    public Cursor fetchItemsList(String lista) throws SQLException {
+        Cursor cursor = myDataBase.rawQuery("SELECT * FROM "+ lista, null);
         if (cursor != null)
             cursor.moveToFirst();
 

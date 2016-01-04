@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+<!-- Vista de un item de la lista -->
+    <!--Este Textview no se vera pero lo usamos para la medida exacta en el que sigue -->
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/id"
+        android:layout_weight="8"
+        android:text="Hola Mundo"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/titulo_item"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:textSize="24sp"
+        android:layout_weight="2"
+        android:textColor="@color/black"
+        android:padding="10dp"
+        android:text="Hola"/>
+</LinearLayout>
