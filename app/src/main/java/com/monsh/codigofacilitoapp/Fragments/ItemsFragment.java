@@ -106,6 +106,22 @@ public class ItemsFragment extends Fragment {
 
                         db.insert(lista,null,values);
                         db.close();
+
+                        //Para actualizar el listview de la bd, lo hacemos despues de insertar y cerrar la consulta
+                        try{
+                            // este chorizote se puede encapsular y usar ocasionalmente
+                            myDbHelper.openDataBase();
+                            Cursor cursor = myDbHelper.fetchItemsList(lista);
+                            from = new String[]{"_id","item"};
+                            to = new int[]{R.id.id,R.id.titulo_item};
+
+                            cursorAdapter = new SimpleCursorAdapter(getActivity().getApplicationContext(),R.layout.item_list,cursor,from,to);
+                            listView.setAdapter(cursorAdapter);
+
+                        }catch (SQLException e){
+                            e.printStackTrace();
+                        }
+
                     }
                 });
                 //Boton Negativo
@@ -145,6 +161,20 @@ public class ItemsFragment extends Fragment {
                         String where = "_id = '"+ID.getText().toString()+"'";
                         db.delete(lista,where,null);
                         db.close();
+
+                        try{
+                            // este chorizote se puede encapsular y usar ocasionalmente
+                            myDBHelper.openDataBase();
+                            Cursor cursor = myDBHelper.fetchItemsList(lista);
+                            from = new String[]{"_id","item"};
+                            to = new int[]{R.id.id,R.id.titulo_item};
+
+                            cursorAdapter = new SimpleCursorAdapter(getActivity().getApplicationContext(),R.layout.item_list,cursor,from,to);
+                            listView.setAdapter(cursorAdapter);
+
+                        }catch (SQLException e){
+                            e.printStackTrace();
+                        }
                     }
                 });
                 adb.show();
